@@ -11,4 +11,8 @@ public class Mower {
 
     String position;
     String movement;
+
+    public void move(String lawnBorders) {
+
+    }
 }

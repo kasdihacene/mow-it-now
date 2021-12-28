@@ -17,6 +17,7 @@ public class LawnArea {
     }
 
     public void mowIt() {
+        mower.move(coordLawn);
         mower.setPosition("1 3 N");
     }
 }
