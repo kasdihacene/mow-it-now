@@ -75,4 +75,30 @@ class MowerTest {
         // Then
         assertThat(orientation).isEqualTo('E');
     }
+
+    @Test
+    void should_move_left_to_West_orientation_when_having_current_orientation_North() {
+        // Given
+        String commandMove = "G";
+        String currentOrientation = "N";
+
+        // When
+        char orientation = Mower.nextOrientation(commandMove, currentOrientation);
+
+        // Then
+        assertThat(orientation).isEqualTo('W');
+    }
+
+    @Test
+    void should_move_left_to_Est_orientation_when_having_current_orientation_South() {
+        // Given
+        String commandMove = "G";
+        String currentOrientation = "S";
+
+        // When
+        char orientation = Mower.nextOrientation(commandMove, currentOrientation);
+
+        // Then
+        assertThat(orientation).isEqualTo('E');
+    }
 }
