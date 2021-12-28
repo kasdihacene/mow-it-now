@@ -28,4 +28,25 @@ class LawnAreaTest {
         assertThat(mower.getPosition()).isEqualTo("1 3 N");
     }
 
+    @Test
+    void should_return_new_position_when_mow_a_lawn_area_from_another_start_position() {
+        // Given
+        String coordLawn = "5 5";
+        String mowerPosition = "3 3 E";
+        String movement = "AADAADADDA";
+        Mower mower = Mower.builder()
+                .position(mowerPosition)
+                .movement(movement)
+                .build();
+        LawnArea lawnArea = LawnArea.builder()
+                .coordLawn(coordLawn)
+                .build();
+
+        // When
+        lawnArea.addMower(mower);
+        lawnArea.mowIt();
+
+        // Then
+        assertThat(mower.getPosition()).isEqualTo("5 1 E");
+    }
 }
