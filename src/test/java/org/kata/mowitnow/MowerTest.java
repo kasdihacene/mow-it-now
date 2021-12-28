@@ -7,11 +7,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MowerTest {
 
     @Test
-    void test() {
+    void should_change_mower_orientation_when_receiving_D_commands() {
         // Given
         String lawnBorders = "5 5";
         String mowerPosition = "3 3 E";
-        String movement = "AADAADADDA";
+        String movement = "DD";
         Mower mower = Mower.builder()
                 .position(mowerPosition)
                 .movement(movement)
@@ -21,7 +21,25 @@ class MowerTest {
         mower.move(lawnBorders);
 
         // Then
-        assertThat(mower.getPosition()).isEqualTo("5 1 E");
+        assertThat(mower.getPosition()).isEqualTo("3 3 W");
+    }
+
+    @Test
+    void should_change_mower_orientation_when_receiving_G_commands() {
+        // Given
+        String lawnBorders = "5 5";
+        String mowerPosition = "3 3 W";
+        String movement = "GG";
+        Mower mower = Mower.builder()
+                .position(mowerPosition)
+                .movement(movement)
+                .build();
+
+        // When
+        mower.move(lawnBorders);
+
+        // Then
+        assertThat(mower.getPosition()).isEqualTo("3 3 E");
     }
 
     @Test
