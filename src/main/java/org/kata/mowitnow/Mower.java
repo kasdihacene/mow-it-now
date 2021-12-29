@@ -1,11 +1,11 @@
 package org.kata.mowitnow;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @Builder
 public class Mower {
 
@@ -18,15 +18,15 @@ public class Mower {
         for (String command : commands) {
             switch (command) {
                 case "D": {
-                    position.nextPositionOrientation("D");
+                    position.turnRight();
                     break;
                 }
                 case "G": {
-                    position.nextPositionOrientation("G");
+                    position.turnLeft();
                     break;
                 }
                 case "A": {
-                    position.move();
+                    position.moveForward();
                     break;
                 }
                 default:

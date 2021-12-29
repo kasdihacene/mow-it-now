@@ -1,6 +1,8 @@
 package org.kata.mowitnow;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,6 +19,7 @@ class MowerTest {
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
+                        .xyLimitBorder(lawnBorders)
                         .build()
                         .parseCommand())
                 .build();
@@ -38,6 +41,7 @@ class MowerTest {
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
+                        .xyLimitBorder(lawnBorders)
                         .build()
                         .parseCommand())
                 .movement(movement)
@@ -50,85 +54,42 @@ class MowerTest {
         assertThat(mower.getPosition().toPosition()).isEqualTo("3 3 E");
     }
 
-    @Test
-    void should_move_right_to_South_orientation_when_having_current_orientation_Est() {
+    @ParameterizedTest
+    @CsvSource({
+            "D,E,S",
+            "D,S,W",
+            "D,W,N",
+            "D,N,E",
+            "G,N,W",
+            "G,S,E"})
+    void should_change_orientation_when_moving_right_or_left(String commandMove, String currentOrientation, String expectedOrientation) {
+
         // Given
-        String commandMove = "D";
-        String currentOrientation = "E";
+        Position position = Position.builder().build();
 
         // When
-        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
+        switch (commandMove) {
+            case "D":
+                position = buildPosition(currentOrientation);
+                position.turnRight();
+                break;
+            case "G":
+                position = buildPosition(currentOrientation);
+                position.turnLeft();
+                break;
+            default:
+                break;
+        }
 
         // Then
-        assertThat(orientation).isEqualTo("S");
+        assertThat(position.getOrientation()).isEqualTo(expectedOrientation);
     }
 
-    private Position buildPosition(String currentOrientation) {
-        return Position.builder().orientation(currentOrientation).build();
+    Position buildPosition(String currentOrientation) {
+        return Position
+                .builder()
+                .orientation(currentOrientation)
+                .build();
     }
 
-    @Test
-    void should_move_right_to_West_orientation_when_having_current_orientation_South() {
-        // Given
-        String commandMove = "D";
-        String currentOrientation = "S";
-
-        // When
-        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
-
-        // Then
-        assertThat(orientation).isEqualTo("W");
-    }
-
-    @Test
-    void should_move_right_to_North_orientation_when_having_current_orientation_West() {
-        // Given
-        String commandMove = "D";
-        String currentOrientation = "W";
-
-        // When
-        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
-
-        // Then
-        assertThat(orientation).isEqualTo("N");
-    }
-
-    @Test
-    void should_move_right_to_Est_orientation_when_having_current_orientation_North() {
-        // Given
-        String commandMove = "D";
-        String currentOrientation = "N";
-
-        // When
-        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
-
-        // Then
-        assertThat(orientation).isEqualTo("E");
-    }
-
-    @Test
-    void should_move_left_to_West_orientation_when_having_current_orientation_North() {
-        // Given
-        String commandMove = "G";
-        String currentOrientation = "N";
-
-        // When
-        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
-
-        // Then
-        assertThat(orientation).isEqualTo("W");
-    }
-
-    @Test
-    void should_move_left_to_Est_orientation_when_having_current_orientation_South() {
-        // Given
-        String commandMove = "G";
-        String currentOrientation = "S";
-
-        // When
-        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
-
-        // Then
-        assertThat(orientation).isEqualTo("E");
-    }
 }

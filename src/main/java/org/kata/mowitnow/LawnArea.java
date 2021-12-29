@@ -1,11 +1,9 @@
 package org.kata.mowitnow;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @Builder
 public class LawnArea {
     private String coordinatesLawn;
