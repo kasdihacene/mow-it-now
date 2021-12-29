@@ -23,12 +23,10 @@ public class Position {
     private static final int Y_COORDINATES_LIMIT = 2;
 
     private Coordinate coordinate;
-
-    private Integer xCoordinateLimit;
-    private Integer yCoordinateLimit;
+    private BorderLimit borderLimit;
 
     private final String commandLine;
-    private final String xyLimitBorder;
+    private final String commandXYLimitBorder;
 
     public void turnLeft() {
         int indexOfCurrentOrientation = MOVEMENT_DG.indexOf(coordinate.getOrientation());
@@ -51,11 +49,11 @@ public class Position {
     public void moveForward() {
         switch (coordinate.getOrientation()) {
             case "N":
-                if (coordinate.getYCoordinate() + 1 <= yCoordinateLimit)
+                if (coordinate.getYCoordinate() + 1 <= borderLimit.getYCoordinateLimit())
                     coordinate.incrementYCoordinate();
                 break;
             case "E":
-                if (coordinate.getXCoordinate() + 1 <= xCoordinateLimit)
+                if (coordinate.getXCoordinate() + 1 <= borderLimit.getXCoordinateLimit())
                     coordinate.incrementXCoordinate();
                 break;
             case "S":
@@ -83,13 +81,17 @@ public class Position {
 
     private void parseBorderLimitsCommand() {
         Pattern pattern = Pattern.compile(COMMAND_BORDERS_PATTERN);
-        Matcher matcher = pattern.matcher(xyLimitBorder);
+        Matcher matcher = pattern.matcher(commandXYLimitBorder);
 
         if (!matcher.find()) {
             throw new RuntimeException("No pattern of border limits found");
         }
-        xCoordinateLimit = Integer.valueOf(matcher.group(X_COORDINATES_LIMIT));
-        yCoordinateLimit = Integer.valueOf(matcher.group(Y_COORDINATES_LIMIT));
+
+        borderLimit = BorderLimit
+                .builder()
+                .xCoordinateLimit(Integer.valueOf(matcher.group(X_COORDINATES_LIMIT)))
+                .yCoordinateLimit(Integer.valueOf(matcher.group(Y_COORDINATES_LIMIT)))
+                .build();
     }
 
     private void parseOrientationCommand() {

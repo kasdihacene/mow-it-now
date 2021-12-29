@@ -19,7 +19,7 @@ class MowerTest {
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
-                        .xyLimitBorder(lawnBorders)
+                        .commandXYLimitBorder(lawnBorders)
                         .build()
                         .parseCommand())
                 .build();
@@ -41,7 +41,7 @@ class MowerTest {
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
-                        .xyLimitBorder(lawnBorders)
+                        .commandXYLimitBorder(lawnBorders)
                         .build()
                         .parseCommand())
                 .movementRecord(movement)
@@ -69,7 +69,7 @@ class MowerTest {
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
-                        .xyLimitBorder(lawnBorders)
+                        .commandXYLimitBorder(lawnBorders)
                         .build()
                         .parseCommand())
                 .movementRecord(movement)

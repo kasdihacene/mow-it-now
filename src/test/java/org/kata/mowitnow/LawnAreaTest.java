@@ -17,7 +17,7 @@ class LawnAreaTest {
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
-                        .xyLimitBorder(coordLawn)
+                        .commandXYLimitBorder(coordLawn)
                         .build()
                         .parseCommand())
                 .build();
@@ -43,7 +43,7 @@ class LawnAreaTest {
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
-                        .xyLimitBorder(coordLawn)
+                        .commandXYLimitBorder(coordLawn)
                         .build()
                         .parseCommand())
                 .build();
