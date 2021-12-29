@@ -13,11 +13,15 @@ class LawnAreaTest {
         String mowerPosition = "1 2 N";
         String movement = "GAGAGAGAA";
         Mower mower = Mower.builder()
-                .position(mowerPosition)
                 .movement(movement)
+                .position(Position
+                        .builder()
+                        .commandLine(mowerPosition)
+                        .build()
+                        .parseCommand())
                 .build();
         LawnArea lawnArea = LawnArea.builder()
-                .coordLawn(coordLawn)
+                .coordinatesLawn(coordLawn)
                 .build();
 
         // When
@@ -25,7 +29,7 @@ class LawnAreaTest {
         lawnArea.mowIt();
 
         // Then
-        assertThat(mower.getPosition()).isEqualTo("1 3 N");
+        assertThat(mower.getPosition().toPosition()).isEqualTo("1 3 N");
     }
 
     @Test
@@ -35,11 +39,15 @@ class LawnAreaTest {
         String mowerPosition = "3 3 E";
         String movement = "AADAADADDA";
         Mower mower = Mower.builder()
-                .position(mowerPosition)
                 .movement(movement)
+                .position(Position
+                        .builder()
+                        .commandLine(mowerPosition)
+                        .build()
+                        .parseCommand())
                 .build();
         LawnArea lawnArea = LawnArea.builder()
-                .coordLawn(coordLawn)
+                .coordinatesLawn(coordLawn)
                 .build();
 
         // When
@@ -47,6 +55,6 @@ class LawnAreaTest {
         lawnArea.mowIt();
 
         // Then
-        assertThat(mower.getPosition()).isEqualTo("5 1 E");
+        assertThat(mower.getPosition().toPosition()).isEqualTo("5 1 E");
     }
 }

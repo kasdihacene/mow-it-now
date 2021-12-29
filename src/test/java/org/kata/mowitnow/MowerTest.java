@@ -13,15 +13,19 @@ class MowerTest {
         String mowerPosition = "3 3 E";
         String movement = "DD";
         Mower mower = Mower.builder()
-                .position(mowerPosition)
                 .movement(movement)
+                .position(Position
+                        .builder()
+                        .commandLine(mowerPosition)
+                        .build()
+                        .parseCommand())
                 .build();
 
         // When
         mower.move(lawnBorders);
 
         // Then
-        assertThat(mower.getPosition()).isEqualTo("3 3 W");
+        assertThat(mower.getPosition().toPosition()).isEqualTo("3 3 W");
     }
 
     @Test
@@ -31,7 +35,11 @@ class MowerTest {
         String mowerPosition = "3 3 W";
         String movement = "GG";
         Mower mower = Mower.builder()
-                .position(mowerPosition)
+                .position(Position
+                        .builder()
+                        .commandLine(mowerPosition)
+                        .build()
+                        .parseCommand())
                 .movement(movement)
                 .build();
 
@@ -39,7 +47,7 @@ class MowerTest {
         mower.move(lawnBorders);
 
         // Then
-        assertThat(mower.getPosition()).isEqualTo("3 3 E");
+        assertThat(mower.getPosition().toPosition()).isEqualTo("3 3 E");
     }
 
     @Test
@@ -49,10 +57,14 @@ class MowerTest {
         String currentOrientation = "E";
 
         // When
-        char orientation = Mower.nextOrientation(commandMove, currentOrientation);
+        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
 
         // Then
-        assertThat(orientation).isEqualTo('S');
+        assertThat(orientation).isEqualTo("S");
+    }
+
+    private Position buildPosition(String currentOrientation) {
+        return Position.builder().orientation(currentOrientation).build();
     }
 
     @Test
@@ -62,10 +74,10 @@ class MowerTest {
         String currentOrientation = "S";
 
         // When
-        char orientation = Mower.nextOrientation(commandMove, currentOrientation);
+        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
 
         // Then
-        assertThat(orientation).isEqualTo('W');
+        assertThat(orientation).isEqualTo("W");
     }
 
     @Test
@@ -75,10 +87,10 @@ class MowerTest {
         String currentOrientation = "W";
 
         // When
-        char orientation = Mower.nextOrientation(commandMove, currentOrientation);
+        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
 
         // Then
-        assertThat(orientation).isEqualTo('N');
+        assertThat(orientation).isEqualTo("N");
     }
 
     @Test
@@ -88,10 +100,10 @@ class MowerTest {
         String currentOrientation = "N";
 
         // When
-        char orientation = Mower.nextOrientation(commandMove, currentOrientation);
+        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
 
         // Then
-        assertThat(orientation).isEqualTo('E');
+        assertThat(orientation).isEqualTo("E");
     }
 
     @Test
@@ -101,10 +113,10 @@ class MowerTest {
         String currentOrientation = "N";
 
         // When
-        char orientation = Mower.nextOrientation(commandMove, currentOrientation);
+        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
 
         // Then
-        assertThat(orientation).isEqualTo('W');
+        assertThat(orientation).isEqualTo("W");
     }
 
     @Test
@@ -114,9 +126,9 @@ class MowerTest {
         String currentOrientation = "S";
 
         // When
-        char orientation = Mower.nextOrientation(commandMove, currentOrientation);
+        String orientation = buildPosition(currentOrientation).nextPositionOrientation(commandMove);
 
         // Then
-        assertThat(orientation).isEqualTo('E');
+        assertThat(orientation).isEqualTo("E");
     }
 }

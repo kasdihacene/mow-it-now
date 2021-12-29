@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class LawnArea {
-    private String coordLawn;
+    private String coordinatesLawn;
     private Mower mower;
 
 
@@ -17,6 +17,6 @@ public class LawnArea {
     }
 
     public void mowIt() {
-        mower.move(coordLawn);
+        mower.move(coordinatesLawn);
     }
 }
