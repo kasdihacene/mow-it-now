@@ -13,7 +13,7 @@ class LawnAreaTest {
         String mowerPosition = "1 2 N";
         String movement = "GAGAGAGAA";
         Mower mower = Mower.builder()
-                .movement(movement)
+                .movementRecord(movement)
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
@@ -22,7 +22,6 @@ class LawnAreaTest {
                         .parseCommand())
                 .build();
         LawnArea lawnArea = LawnArea.builder()
-                .coordinatesLawn(coordLawn)
                 .build();
 
         // When
@@ -40,7 +39,7 @@ class LawnAreaTest {
         String mowerPosition = "3 3 E";
         String movement = "AADAADADDA";
         Mower mower = Mower.builder()
-                .movement(movement)
+                .movementRecord(movement)
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
@@ -49,7 +48,6 @@ class LawnAreaTest {
                         .parseCommand())
                 .build();
         LawnArea lawnArea = LawnArea.builder()
-                .coordinatesLawn(coordLawn)
                 .build();
 
         // When

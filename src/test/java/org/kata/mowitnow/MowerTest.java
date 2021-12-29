@@ -15,7 +15,7 @@ class MowerTest {
         String mowerPosition = "3 3 E";
         String movement = "DD";
         Mower mower = Mower.builder()
-                .movement(movement)
+                .movementRecord(movement)
                 .position(Position
                         .builder()
                         .commandLine(mowerPosition)
@@ -25,7 +25,7 @@ class MowerTest {
                 .build();
 
         // When
-        mower.move(lawnBorders);
+        mower.move();
 
         // Then
         assertThat(mower.getPosition().toPosition()).isEqualTo("3 3 W");
@@ -44,11 +44,11 @@ class MowerTest {
                         .xyLimitBorder(lawnBorders)
                         .build()
                         .parseCommand())
-                .movement(movement)
+                .movementRecord(movement)
                 .build();
 
         // When
-        mower.move(lawnBorders);
+        mower.move();
 
         // Then
         assertThat(mower.getPosition().toPosition()).isEqualTo("3 3 E");
@@ -72,11 +72,11 @@ class MowerTest {
                         .xyLimitBorder(lawnBorders)
                         .build()
                         .parseCommand())
-                .movement(movement)
+                .movementRecord(movement)
                 .build();
 
         // When
-        mower.move(lawnBorders);
+        mower.move();
 
         // Then
         assertThat(mower.getPosition().toPosition()).isEqualTo(expectedPosition);
@@ -110,13 +110,16 @@ class MowerTest {
         }
 
         // Then
-        assertThat(position.getOrientation()).isEqualTo(expectedOrientation);
+        assertThat(position.getCoordinate().getOrientation()).isEqualTo(expectedOrientation);
     }
 
     Position buildPosition(String currentOrientation) {
         return Position
                 .builder()
-                .orientation(currentOrientation)
+                .coordinate(Coordinate
+                        .builder()
+                        .orientation(currentOrientation)
+                        .build())
                 .build();
     }
 

@@ -9,23 +9,26 @@ import lombok.Setter;
 @Builder
 public class Mower {
 
-    private String movement;
+    private static final String MOVE_RIGHT_COMMAND = "D";
+    private static final String MOVE_LEFT_COMMAND = "G";
+    private static final String MOVE_FORWARD_COMMAND = "A";
+    private String movementRecord;
     private Position position;
 
-    public void move(String lawnBorders) {
-        String[] commands = movement.split("");
+    public void move() {
+        String[] commands = movementRecord.split("");
 
         for (String command : commands) {
             switch (command) {
-                case "D": {
+                case MOVE_RIGHT_COMMAND: {
                     position.turnRight();
                     break;
                 }
-                case "G": {
+                case MOVE_LEFT_COMMAND: {
                     position.turnLeft();
                     break;
                 }
-                case "A": {
+                case MOVE_FORWARD_COMMAND: {
                     position.moveForward();
                     break;
                 }

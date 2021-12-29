@@ -1,12 +1,13 @@
 package org.kata.mowitnow;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
 @Builder
 public class LawnArea {
-    private String coordinatesLawn;
     private Mower mower;
 
 
@@ -15,6 +16,6 @@ public class LawnArea {
     }
 
     public void mowIt() {
-        mower.move(coordinatesLawn);
+        mower.move();
     }
 }
