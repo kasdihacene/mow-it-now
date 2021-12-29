@@ -56,6 +56,34 @@ class MowerTest {
 
     @ParameterizedTest
     @CsvSource({
+            "0 2 W, 0 2 W",
+            "5 2 E, 5 2 E",
+            "2 5 N, 2 5 N",
+            "2 0 S, 2 0 S",
+    })
+    void should_not_move_forward_when_going_out_of_borders(String mowerPosition, String expectedPosition) {
+        // Given
+        String lawnBorders = "5 5";
+        String movement = "AA";
+        Mower mower = Mower.builder()
+                .position(Position
+                        .builder()
+                        .commandLine(mowerPosition)
+                        .xyLimitBorder(lawnBorders)
+                        .build()
+                        .parseCommand())
+                .movement(movement)
+                .build();
+
+        // When
+        mower.move(lawnBorders);
+
+        // Then
+        assertThat(mower.getPosition().toPosition()).isEqualTo(expectedPosition);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
             "D,E,S",
             "D,S,W",
             "D,W,N",

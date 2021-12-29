@@ -46,16 +46,20 @@ public class Position {
     public void moveForward() {
         switch (orientation) {
             case "N":
-                yCoordinate = yCoordinate + 1;
+                if (yCoordinate + 1 <= yCoordinateLimit)
+                    yCoordinate = yCoordinate + 1;
                 break;
             case "E":
-                xCoordinate = xCoordinate + 1;
+                if (xCoordinate + 1 <= xCoordinateLimit)
+                    xCoordinate = xCoordinate + 1;
                 break;
             case "S":
-                yCoordinate = yCoordinate - 1;
+                if (yCoordinate - 1 >= 0)
+                    yCoordinate = yCoordinate - 1;
                 break;
             case "W":
-                xCoordinate = xCoordinate - 1;
+                if (xCoordinate - 1 >= 0)
+                    xCoordinate = xCoordinate - 1;
                 break;
             default:
                 break;
