@@ -3,6 +3,7 @@ package org.kata.mowitnow;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.kata.mowitnow.mower.Mower;
 
 @Getter
 @Setter

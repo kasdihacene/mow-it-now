@@ -1,8 +1,10 @@
-package org.kata.mowitnow;
+package org.kata.mowitnow.mower;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.kata.mowitnow.BorderLimit;
+import org.kata.mowitnow.mower.Coordinate;
 
 @Getter
 @Setter

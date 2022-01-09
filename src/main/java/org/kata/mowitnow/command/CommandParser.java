@@ -1,9 +1,9 @@
-package org.kata.mowitnow.commandpattern;
+package org.kata.mowitnow.command;
 
 import lombok.Builder;
 import org.kata.mowitnow.BorderLimit;
-import org.kata.mowitnow.Coordinate;
-import org.kata.mowitnow.MowerCoordinate;
+import org.kata.mowitnow.mower.Coordinate;
+import org.kata.mowitnow.mower.MowerCoordinate;
 
 import java.util.ArrayList;
 import java.util.Arrays;

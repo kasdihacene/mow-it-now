@@ -3,6 +3,9 @@ package org.kata.mowitnow;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.kata.mowitnow.mower.Coordinate;
+import org.kata.mowitnow.mower.Mower;
+import org.kata.mowitnow.mower.Position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
