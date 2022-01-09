@@ -2,8 +2,8 @@ package org.kata.mowitnow.command;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.kata.mowitnow.BorderLimit;
-import org.kata.mowitnow.mower.MowerCoordinate;
+import org.kata.mowitnow.mower.BorderLimit;
+import org.kata.mowitnow.mower.position.MowerCoordinate;
 
 import java.io.IOException;
 import java.nio.file.Files;

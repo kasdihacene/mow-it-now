@@ -3,9 +3,10 @@ package org.kata.mowitnow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kata.mowitnow.command.CommandParser;
+import org.kata.mowitnow.mower.BorderLimit;
 import org.kata.mowitnow.mower.Mower;
-import org.kata.mowitnow.mower.MowerCoordinate;
-import org.kata.mowitnow.mower.Position;
+import org.kata.mowitnow.mower.position.MowerCoordinate;
+import org.kata.mowitnow.mower.position.Position;
 
 import java.io.IOException;
 import java.nio.file.Files;

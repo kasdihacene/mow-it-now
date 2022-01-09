@@ -1,4 +1,4 @@
-package org.kata.mowitnow.mower;
+package org.kata.mowitnow.mower.position;
 
 import lombok.Builder;
 import lombok.Getter;

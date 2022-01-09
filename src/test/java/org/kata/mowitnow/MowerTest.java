@@ -3,9 +3,10 @@ package org.kata.mowitnow;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.kata.mowitnow.mower.Coordinate;
+import org.kata.mowitnow.mower.BorderLimit;
+import org.kata.mowitnow.mower.position.Coordinate;
 import org.kata.mowitnow.mower.Mower;
-import org.kata.mowitnow.mower.Position;
+import org.kata.mowitnow.mower.position.Position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -79,6 +80,36 @@ class MowerTest {
         mower.move();
 
         // Then
+        assertThat(mower.getPosition().toPosition()).isEqualTo(expectedPosition);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "AAAGAA, 1 4 N, 5, 5, 1 5 N",
+            "AAAAAA, 0 10 E, 4, 12, 4 10 E",
+    })
+    void should_lock_the_mower_move_after_going_outside_the_lawn(String movement, String mowerPosition, Integer xCoordinateLimit, Integer yCoordinateLimit, String expectedPosition) {
+        // Given
+
+        String[] positionTokens = mowerPosition.split(" ");
+        Mower mower = Mower.builder()
+                .position(Position
+                        .builder()
+                        .coordinate(Coordinate.builder()
+                                .xCoordinate(Integer.valueOf(positionTokens[0]))
+                                .yCoordinate(Integer.valueOf(positionTokens[1]))
+                                .orientation(positionTokens[2])
+                                .build())
+                        .borderLimit(BorderLimit.builder().xCoordinateLimit(xCoordinateLimit).yCoordinateLimit(yCoordinateLimit).build())
+                        .build())
+                .movementRecord(movement)
+                .build();
+
+        // When
+        mower.move();
+
+        // Then
+        assertThat(mower.getHasNonBlockingMove()).isFalse();
         assertThat(mower.getPosition().toPosition()).isEqualTo(expectedPosition);
     }
 

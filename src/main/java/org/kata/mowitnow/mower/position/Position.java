@@ -1,10 +1,9 @@
-package org.kata.mowitnow.mower;
+package org.kata.mowitnow.mower.position;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.kata.mowitnow.BorderLimit;
-import org.kata.mowitnow.mower.Coordinate;
+import org.kata.mowitnow.mower.BorderLimit;
 
 @Getter
 @Setter
@@ -12,6 +11,8 @@ import org.kata.mowitnow.mower.Coordinate;
 public class Position {
 
     private static final String MOVEMENT_DG = "NESW"; // North Est West South
+    private static final boolean MOVE_NOT_PROCESSED = false;
+    private static final boolean MOVE_PROCESSED = true;
 
     private Coordinate coordinate;
     private BorderLimit borderLimit;
@@ -34,27 +35,36 @@ public class Position {
                         MOVEMENT_DG.charAt(indexOfCurrentOrientation + 1)));
     }
 
-    public void moveForward() {
+    public boolean moveForward() {
         switch (coordinate.getOrientation()) {
             case "N":
                 if (coordinate.getYCoordinate() + 1 <= borderLimit.getYCoordinateLimit())
                     coordinate.incrementYCoordinate();
+                else return MOVE_NOT_PROCESSED;
                 break;
+
             case "E":
                 if (coordinate.getXCoordinate() + 1 <= borderLimit.getXCoordinateLimit())
                     coordinate.incrementXCoordinate();
+                else return MOVE_NOT_PROCESSED;
                 break;
+
             case "S":
                 if (coordinate.getYCoordinate() - 1 >= 0)
                     coordinate.decrementYCoordinate();
+                else return MOVE_NOT_PROCESSED;
                 break;
+
             case "W":
                 if (coordinate.getXCoordinate() - 1 >= 0)
                     coordinate.decrementXCoordinate();
+                else return MOVE_NOT_PROCESSED;
                 break;
+
             default:
-                break;
+                return MOVE_NOT_PROCESSED;
         }
+        return MOVE_PROCESSED;
     }
 
     public String toPosition() {
