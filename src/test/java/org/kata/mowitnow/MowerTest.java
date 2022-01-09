@@ -11,17 +11,14 @@ class MowerTest {
     @Test
     void should_change_mower_orientation_when_receiving_D_commands() {
         // Given
-        String lawnBorders = "5 5";
-        String mowerPosition = "3 3 E";
         String movement = "DD";
         Mower mower = Mower.builder()
                 .movementRecord(movement)
                 .position(Position
                         .builder()
-                        .commandLine(mowerPosition)
-                        .commandXYLimitBorder(lawnBorders)
-                        .build()
-                        .parseCommand())
+                        .coordinate(Coordinate.builder().xCoordinate(3).yCoordinate(3).orientation("E").build())
+                        .borderLimit(BorderLimit.builder().xCoordinateLimit(5).yCoordinateLimit(5).build())
+                        .build())
                 .build();
 
         // When
@@ -34,16 +31,13 @@ class MowerTest {
     @Test
     void should_change_mower_orientation_when_receiving_G_commands() {
         // Given
-        String lawnBorders = "5 5";
-        String mowerPosition = "3 3 W";
         String movement = "GG";
         Mower mower = Mower.builder()
                 .position(Position
                         .builder()
-                        .commandLine(mowerPosition)
-                        .commandXYLimitBorder(lawnBorders)
-                        .build()
-                        .parseCommand())
+                        .coordinate(Coordinate.builder().xCoordinate(3).yCoordinate(3).orientation("W").build())
+                        .borderLimit(BorderLimit.builder().xCoordinateLimit(5).yCoordinateLimit(5).build())
+                        .build())
                 .movementRecord(movement)
                 .build();
 
@@ -63,15 +57,18 @@ class MowerTest {
     })
     void should_not_move_forward_when_going_out_of_borders(String mowerPosition, String expectedPosition) {
         // Given
-        String lawnBorders = "5 5";
         String movement = "AA";
+        String[] positionTokens = mowerPosition.split(" ");
         Mower mower = Mower.builder()
                 .position(Position
                         .builder()
-                        .commandLine(mowerPosition)
-                        .commandXYLimitBorder(lawnBorders)
-                        .build()
-                        .parseCommand())
+                        .coordinate(Coordinate.builder()
+                                .xCoordinate(Integer.valueOf(positionTokens[0]))
+                                .yCoordinate(Integer.valueOf(positionTokens[1]))
+                                .orientation(positionTokens[2])
+                                .build())
+                        .borderLimit(BorderLimit.builder().xCoordinateLimit(5).yCoordinateLimit(5).build())
+                        .build())
                 .movementRecord(movement)
                 .build();
 

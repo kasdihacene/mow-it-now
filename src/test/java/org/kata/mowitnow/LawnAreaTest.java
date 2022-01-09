@@ -1,26 +1,44 @@
 package org.kata.mowitnow;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.kata.mowitnow.commandpattern.CommandParser;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LawnAreaTest {
 
+    private static final String INSTRUCTIONS_FILE_TXT = "instructions/file1.txt";
+
+    private CommandParser commandParser;
+
+    @BeforeEach
+    void setup() throws IOException {
+        commandParser = CommandParser.builder()
+                .commandsFile(Files.readString(Paths.get(INSTRUCTIONS_FILE_TXT)))
+                .build();
+    }
+
     @Test
     void should_return_new_position_when_mow_a_lawn_area_with_one_mower() {
         // Given
-        String coordLawn = "5 5";
-        String mowerPosition = "1 2 N";
-        String movement = "GAGAGAGAA";
+        int firstMower = 0;
+        MowerCoordinate mowerCoordinate = commandParser.getMowersCoordinates().get(firstMower);
+        BorderLimit borderLimit = commandParser.getBorderLimit();
+
         Mower mower = Mower.builder()
-                .movementRecord(movement)
+                .movementRecord(mowerCoordinate.getMovement())
                 .position(Position
                         .builder()
-                        .commandLine(mowerPosition)
-                        .commandXYLimitBorder(coordLawn)
-                        .build()
-                        .parseCommand())
+                        .coordinate(mowerCoordinate.getCoordinate())
+                        .borderLimit(borderLimit)
+                        .build())
                 .build();
+
         LawnArea lawnArea = LawnArea.builder()
                 .build();
 
@@ -35,18 +53,19 @@ class LawnAreaTest {
     @Test
     void should_return_new_position_when_mow_a_lawn_area_from_another_start_position() {
         // Given
-        String coordLawn = "5 5";
-        String mowerPosition = "3 3 E";
-        String movement = "AADAADADDA";
+        int SecondMower = 1;
+        MowerCoordinate mowerCoordinate = commandParser.getMowersCoordinates().get(SecondMower);
+        BorderLimit borderLimit = commandParser.getBorderLimit();
+
         Mower mower = Mower.builder()
-                .movementRecord(movement)
+                .movementRecord(mowerCoordinate.getMovement())
                 .position(Position
                         .builder()
-                        .commandLine(mowerPosition)
-                        .commandXYLimitBorder(coordLawn)
-                        .build()
-                        .parseCommand())
+                        .coordinate(mowerCoordinate.getCoordinate())
+                        .borderLimit(borderLimit)
+                        .build())
                 .build();
+
         LawnArea lawnArea = LawnArea.builder()
                 .build();
 

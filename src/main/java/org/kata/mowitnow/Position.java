@@ -4,29 +4,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @Getter
 @Setter
 @Builder
 public class Position {
 
     private static final String MOVEMENT_DG = "NESW"; // North Est West South
-    private static final String COMMAND_PATTERN = "^([0-9]+) ([0-9]+) ([A-Z])$";
-    private static final String COMMAND_BORDERS_PATTERN = "^([0-9]+) ([0-9]+)$";
-
-    private static final int MOWER_ORIENTATION = 3;
-    private static final int X_COORDINATES = 1;
-    private static final int Y_COORDINATES = 2;
-    private static final int X_COORDINATES_LIMIT = 1;
-    private static final int Y_COORDINATES_LIMIT = 2;
 
     private Coordinate coordinate;
     private BorderLimit borderLimit;
-
-    private final String commandLine;
-    private final String commandXYLimitBorder;
 
     public void turnLeft() {
         int indexOfCurrentOrientation = MOVEMENT_DG.indexOf(coordinate.getOrientation());
@@ -73,39 +59,4 @@ public class Position {
         return coordinate.toPosition();
     }
 
-    public Position parseCommand() {
-        parseOrientationCommand();
-        parseBorderLimitsCommand();
-        return this;
-    }
-
-    private void parseBorderLimitsCommand() {
-        Pattern pattern = Pattern.compile(COMMAND_BORDERS_PATTERN);
-        Matcher matcher = pattern.matcher(commandXYLimitBorder);
-
-        if (!matcher.find()) {
-            throw new RuntimeException("No pattern of border limits found");
-        }
-
-        borderLimit = BorderLimit
-                .builder()
-                .xCoordinateLimit(Integer.valueOf(matcher.group(X_COORDINATES_LIMIT)))
-                .yCoordinateLimit(Integer.valueOf(matcher.group(Y_COORDINATES_LIMIT)))
-                .build();
-    }
-
-    private void parseOrientationCommand() {
-        Pattern pattern = Pattern.compile(COMMAND_PATTERN);
-        Matcher matcher = pattern.matcher(commandLine);
-
-        if (!matcher.find()) {
-            throw new RuntimeException("No pattern of mower position found");
-        }
-
-        coordinate = Coordinate.builder()
-                .xCoordinate(Integer.valueOf(matcher.group(X_COORDINATES)))
-                .yCoordinate(Integer.valueOf(matcher.group(Y_COORDINATES)))
-                .orientation(matcher.group(MOWER_ORIENTATION))
-                .build();
-    }
 }

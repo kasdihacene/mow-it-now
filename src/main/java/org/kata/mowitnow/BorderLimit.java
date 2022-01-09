@@ -1,9 +1,8 @@
 package org.kata.mowitnow;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@EqualsAndHashCode
 @Setter
 @Getter
 @Builder

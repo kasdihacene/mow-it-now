@@ -12,13 +12,14 @@ public class Mower {
     private static final String MOVE_RIGHT_COMMAND = "D";
     private static final String MOVE_LEFT_COMMAND = "G";
     private static final String MOVE_FORWARD_COMMAND = "A";
+
     private String movementRecord;
     private Position position;
 
     public void move() {
-        String[] commands = movementRecord.split("");
+        String[] movements = movementRecord.split("");
 
-        for (String command : commands) {
+        for (String command : movements) {
             switch (command) {
                 case MOVE_RIGHT_COMMAND: {
                     position.turnRight();
