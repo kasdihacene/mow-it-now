@@ -15,7 +15,7 @@ public class Mower {
     @Builder.Default
     private Boolean hasNonBlockingMove = true;
 
-    public void move() {
+    public Mower move() {
         String[] movements = movementRecord.split("");
 
         for (String command : movements) {
@@ -25,6 +25,7 @@ public class Mower {
                         .move(position));
             }
         }
+        return this;
     }
 
 }

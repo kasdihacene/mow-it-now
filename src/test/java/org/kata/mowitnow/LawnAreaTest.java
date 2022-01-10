@@ -11,6 +11,8 @@ import org.kata.mowitnow.mower.position.Position;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -79,5 +81,33 @@ class LawnAreaTest {
 
         // Then
         assertThat(mower.getPosition().toPosition()).isEqualTo("5 1 E");
+    }
+
+    @Test
+    void should_mow_the_lawn_area_when_having_several_mowers() {
+        // Given
+        List<MowerCoordinate> mowerCoordinates = commandParser.getMowersCoordinates();
+        BorderLimit borderLimit = commandParser.getBorderLimit();
+
+        List<Mower> mowers = mowerCoordinates.stream().map(mowerCoordinate -> Mower.builder()
+                .movementRecord(mowerCoordinate.getMovement())
+                .position(Position
+                        .builder()
+                        .coordinate(mowerCoordinate.getCoordinate())
+                        .borderLimit(borderLimit)
+                        .build())
+                .build()).collect(Collectors.toList());
+
+        LawnArea lawnArea = LawnArea.builder()
+                .mowers(mowers)
+                .build();
+
+        // When
+        lawnArea.mowIt();
+
+        // Then
+        List<Mower> areaMowers = lawnArea.getMowers();
+        assertThat(areaMowers.get(0).getPosition().toPosition()).isEqualTo("1 3 N");
+        assertThat(areaMowers.get(1).getPosition().toPosition()).isEqualTo("5 1 E");
     }
 }
