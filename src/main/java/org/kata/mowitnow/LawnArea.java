@@ -22,6 +22,7 @@ public class LawnArea {
     }
 
     public void mowIt() {
+        // TODO : Intercept the inaccessible positions (where the precedent mowers are stopped)
         mowers.stream()
                 .map(Mower::move)
                 .collect(Collectors.toList());

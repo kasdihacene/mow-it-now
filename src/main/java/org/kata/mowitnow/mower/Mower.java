@@ -10,6 +10,7 @@ import org.kata.mowitnow.mower.position.Position;
 @Builder
 public class Mower {
 
+    // TODO : parse the movement record (build list commands according to the string command)
     private String movementRecord;
     private Position position;
     @Builder.Default
