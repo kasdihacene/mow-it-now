@@ -36,35 +36,8 @@ public class Position {
     }
 
     public boolean moveForward() {
-        switch (coordinate.getOrientation()) {
-            case "N":
-                if (coordinate.getYCoordinate() + 1 <= borderLimit.getYCoordinateLimit())
-                    coordinate.incrementYCoordinate();
-                else return MOVE_NOT_PROCESSED;
-                break;
-
-            case "E":
-                if (coordinate.getXCoordinate() + 1 <= borderLimit.getXCoordinateLimit())
-                    coordinate.incrementXCoordinate();
-                else return MOVE_NOT_PROCESSED;
-                break;
-
-            case "S":
-                if (coordinate.getYCoordinate() - 1 >= 0)
-                    coordinate.decrementYCoordinate();
-                else return MOVE_NOT_PROCESSED;
-                break;
-
-            case "W":
-                if (coordinate.getXCoordinate() - 1 >= 0)
-                    coordinate.decrementXCoordinate();
-                else return MOVE_NOT_PROCESSED;
-                break;
-
-            default:
-                return MOVE_NOT_PROCESSED;
-        }
-        return MOVE_PROCESSED;
+        return Orientation.valueOf(coordinate.getOrientation())
+                .updateOrientation(coordinate, borderLimit);
     }
 
     public String toPosition() {

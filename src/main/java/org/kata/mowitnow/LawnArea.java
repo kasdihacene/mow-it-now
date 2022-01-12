@@ -3,7 +3,6 @@ package org.kata.mowitnow;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Singular;
 import org.kata.mowitnow.mower.Mower;
 
 import java.util.ArrayList;
